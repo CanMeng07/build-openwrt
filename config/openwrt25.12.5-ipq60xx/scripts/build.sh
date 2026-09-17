@@ -2,7 +2,8 @@
 set -Eeuo pipefail
 export TZ=UTC
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-mkdir -p "$ROOT/logs" "$ROOT/work" "$ROOT/output"
+mkdir -p "$ROOT/logs" "$ROOT/work" "$ROOT/output" "$ROOT/cache/downloads" "$ROOT/cache/ccache"
+export CCACHE_DIR="$ROOT/cache/ccache"
 exec > >(tee -a "$ROOT/logs/build.log") 2>&1
 trap 'rc=$?; printf "Exit status: %s; time: %s\n" "$rc" "$(date -u +%FT%TZ)"; exit "$rc"' EXIT
 printf 'Collection scope: local/cloud compilation only; time: %s\n' "$(date -u +%FT%TZ)"
@@ -34,16 +35,16 @@ cp "$ROOT/board/10-zn-m2-network" files/etc/board.d/
 cp "$ROOT/board/11-zn-m2-caldata" files/etc/hotplug.d/firmware/
 chmod 0755 files/etc/board.d/10-zn-m2-network files/etc/hotplug.d/firmware/11-zn-m2-caldata
 cp "$ROOT/config.seed" .config
-make defconfig
+make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" defconfig
 grep -Fxq 'CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_zn_m2=y' .config
 for package in luci-app-openclash ua3f mihomo-builtin ipq-wifi-zn-m2; do
   grep -Fxq "CONFIG_PACKAGE_${package}=y" .config || { echo "Missing configured package: $package"; exit 1; }
 done
-make download -j8
+make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" download -j8
 JOBS=$(nproc)
-make tools/install -j"$JOBS" V=s
-make toolchain/install -j"$JOBS" V=s
-make -j"$JOBS" V=s
+make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" tools/install -j"$JOBS" V=s
+make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" toolchain/install -j"$JOBS" V=s
+make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" -j"$JOBS" V=s
 python3 "$ROOT/scripts/make-factory.py" "$PWD" "$ROOT/output"
 find bin -type f \( -name '*.apk' -o -name '*.ipk' \) -print0 | sort -z | xargs -0 -r sha256sum > "$ROOT/logs/packages.sha256"
 echo 'Complete zn,m2 firmware image generated; static layout gates passed. Runtime boot and recovery remain unverified.'
