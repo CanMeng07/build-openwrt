@@ -1,0 +1,27 @@
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq60xx=y
+CONFIG_TARGET_MULTI_PROFILE=y
+# CONFIG_TARGET_ALL_PROFILES is not set
+CONFIG_PACKAGE_luci-ssl=y
+CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
+CONFIG_PACKAGE_luci-compat=y
+CONFIG_PACKAGE_dnsmasq-full=y
+# CONFIG_PACKAGE_dnsmasq is not set
+CONFIG_PACKAGE_firewall4=y
+CONFIG_PACKAGE_odhcpd-ipv6only=y
+CONFIG_PACKAGE_odhcp6c=y
+CONFIG_PACKAGE_ca-bundle=y
+CONFIG_PACKAGE_curl=y
+CONFIG_PACKAGE_bash=y
+CONFIG_PACKAGE_ip-full=y
+CONFIG_PACKAGE_block-mount=y
+CONFIG_PACKAGE_kmod-usb-storage=y
+CONFIG_PACKAGE_kmod-fs-ext4=y
+CONFIG_PACKAGE_kmod-fs-vfat=y
+CONFIG_PACKAGE_luci-app-ttyd=y
+CONFIG_PACKAGE_luci-app-upnp=y
+CONFIG_PACKAGE_luci-app-ddns=y
+CONFIG_PACKAGE_luci-app-sqm=y
+CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_ua3f=y
+CONFIG_PACKAGE_mihomo-builtin=y
