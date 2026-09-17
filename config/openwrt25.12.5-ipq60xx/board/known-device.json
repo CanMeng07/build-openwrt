@@ -1,0 +1,359 @@
+{
+  "target": "192.168.10.1",
+  "model_reported": "ZN M2",
+  "board_name": "zn,m2",
+  "compatible": [
+    "zn,m2",
+    "qcom,ipq6018"
+  ],
+  "target_subtarget": "qualcommax/ipq60xx",
+  "architecture": "aarch64",
+  "cpu_logical_cores": 4,
+  "nand_reported_bytes": 134217728,
+  "nand_name_reported": "ESMT PSR1GA30DT",
+  "mtd_layout": [
+    {
+      "node": "/dev/mtd0",
+      "index": 0,
+      "name": "0:sbl1",
+      "type": "nand",
+      "size": 1572864,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 0,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd1",
+      "index": 1,
+      "name": "0:mibib",
+      "type": "nand",
+      "size": 1048576,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 1572864,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd2",
+      "index": 2,
+      "name": "0:bootconfig",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 2621440,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd3",
+      "index": 3,
+      "name": "0:bootconfig1",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 3145728,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd4",
+      "index": 4,
+      "name": "0:qsee",
+      "type": "nand",
+      "size": 3670016,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 3670016,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd5",
+      "index": 5,
+      "name": "0:qsee_1",
+      "type": "nand",
+      "size": 3670016,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 7340032,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd6",
+      "index": 6,
+      "name": "0:devcfg",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 11010048,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd7",
+      "index": 7,
+      "name": "0:devcfg_1",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 11534336,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd8",
+      "index": 8,
+      "name": "0:rpm",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 12058624,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd9",
+      "index": 9,
+      "name": "0:rpm_1",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 12582912,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd10",
+      "index": 10,
+      "name": "0:cdt",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 13107200,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd11",
+      "index": 11,
+      "name": "0:cdt_1",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 13631488,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd12",
+      "index": 12,
+      "name": "0:appsblenv",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 14155776,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd13",
+      "index": 13,
+      "name": "0:appsbl",
+      "type": "nand",
+      "size": 1572864,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 14680064,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd14",
+      "index": 14,
+      "name": "0:appsbl_1",
+      "type": "nand",
+      "size": 1572864,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 16252928,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd15",
+      "index": 15,
+      "name": "0:art",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 17825792,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd16",
+      "index": 16,
+      "name": "rootfs",
+      "type": "nand",
+      "size": 101187584,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 18350080,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd17",
+      "index": 17,
+      "name": "0:ethphyfw",
+      "type": "nand",
+      "size": 524288,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 119537664,
+      "flags": "0x400"
+    },
+    {
+      "node": "/dev/mtd18",
+      "index": 18,
+      "name": "0:ctccfw",
+      "type": "nand",
+      "size": 10747904,
+      "erasesize": 131072,
+      "writesize": 2048,
+      "subpagesize": 2048,
+      "offset": 120061952,
+      "flags": "0x400"
+    }
+  ],
+  "ubi_container": {
+    "mtd": 16,
+    "offset": 18350080,
+    "bytes": 101187584,
+    "erase_size": 131072,
+    "min_io_size": 2048,
+    "leb_size": 126976,
+    "volumes": [
+      {
+        "id": 0,
+        "name": "kernel",
+        "reserved_lebs": 45,
+        "bytes": 5713920
+      },
+      {
+        "id": 1,
+        "name": "rootfs",
+        "reserved_lebs": 189,
+        "bytes": 23998464
+      },
+      {
+        "id": 2,
+        "name": "rootfs_data",
+        "reserved_lebs": 514,
+        "bytes": 65265664
+      }
+    ]
+  },
+  "fit": {
+    "config": "config@cp03-c1",
+    "architecture": "arm64",
+    "compression": "gzip",
+    "load": "0x41000000",
+    "entry": "0x41000000"
+  },
+  "network": {
+    "lan": [
+      "lan1",
+      "lan2",
+      "lan3"
+    ],
+    "wan": "wan"
+  },
+  "calibration": {
+    "art": "/dev/mtd15ro",
+    "label": "0:art",
+    "offset": 4096,
+    "bytes": 65536,
+    "matches_existing_firmware_file": true,
+    "sha256": "d5603b3d5dae21c7b25f87fa50f79f081651c2148f26d6daba78a6de7f4e5b08",
+    "variant": "ZN-M2",
+    "qmi_chip_id": 0,
+    "qmi_board_id": 255,
+    "board_entry_sha256": "52f1094dd3279bab95bf3845be273854fa4f2daa8595ca0b26e1be0e19fa6948"
+  },
+  "constraints": {
+    "bootloader_immutable": true,
+    "env_immutable": true,
+    "partition_layout_immutable": true,
+    "no_router_write_or_reboot": true
+  },
+  "unknown": [
+    "Actual executing bootloader copy",
+    "New Linux runtime driver compatibility",
+    "Actual recovery entry and availability",
+    "Successful boot and recovery of the new image"
+  ],
+  "evidence": [
+    "evidence/hardware/03-ubus-system-board.stdout.txt",
+    "evidence/hardware/04-board-json.stdout.txt",
+    "evidence/storage/b12-mtd-sysfs.stdout.txt",
+    "evidence/storage/b13-ubinfo.stdout.txt",
+    "evidence/hardware/d04-calibration-config.stdout.txt",
+    "evidence/command-metadata/wireless-calibration-analysis.json",
+    "2OpenWrt25.12.5/reference/current-fit.json"
+  ],
+  "cpu_reported": {
+    "system": "ARMv8 Processor rev 4",
+    "architecture": 8,
+    "implementer": "0x51",
+    "part": "0x801",
+    "revision": 4,
+    "logical_processors": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "memory_reported": {
+    "boot_span_bytes": 536870912,
+    "boot_total_KiB": 524288,
+    "boot_reserved_KiB": 87176,
+    "MemTotal_KiB": 438712,
+    "MemAvailable_KiB": 191592,
+    "physical_nominal_capacity": "UNKNOWN"
+  },
+  "current_distribution_labels": {
+    "ubus": "Kwrt 24.10.0-rc2",
+    "openwrt_release": "iStoreOS 12.17.2024 by BohaoTu",
+    "single_firmware_origin": "UNKNOWN"
+  },
+  "bootloader": {
+    "environment_bootcmd": "bootipq",
+    "environment_bootdelay": 2,
+    "environment_bootargs": "console=ttyMSM0,115200n8",
+    "env_config_node": "/dev/mtd12",
+    "env_config_offset": 0,
+    "env_config_size": 262144,
+    "candidate_banner": "U-Boot 2016.01 (Dec 10 2021 - 22:30:07 +0800)",
+    "actual_executing_copy": "UNKNOWN",
+    "recovery_static_ubi_target_offset": 18350080,
+    "recovery_static_ubi_region_bytes": 101187584,
+    "actual_recovery_entry_and_availability": "UNKNOWN"
+  }
+}

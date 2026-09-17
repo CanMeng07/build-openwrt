@@ -1,0 +1,8 @@
+#!/bin/sh
+. /lib/functions/uci-defaults.sh
+. /lib/functions/system.sh
+[ "$(board_name)" = "zn,m2" ] || exit 0
+board_config_update
+ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
+board_config_flush
+exit 0

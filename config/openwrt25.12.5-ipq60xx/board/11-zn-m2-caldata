@@ -1,0 +1,7 @@
+#!/bin/sh
+[ "$FIRMWARE" = "ath11k/IPQ6018/hw1.0/cal-ahb-c000000.wifi.bin" ] || exit 0
+. /lib/functions/system.sh
+[ "$(board_name)" = "zn,m2" ] || exit 0
+[ -e "/lib/firmware/$FIRMWARE" ] && exit 0
+. /lib/functions/caldata.sh
+caldata_extract "0:art" 0x1000 0x10000

@@ -1,2 +1,5 @@
 /work/
 /logs/
+/output/
+/packages/ipq-wifi-zn-m2/board-2.bin
+__pycache__/

@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-09-17T13:29:46.432438+00:00",
+  "checks": {
+    "python_syntax": true,
+    "existing_device_fit": true,
+    "existing_device_ubi": true,
+    "reject_changed_fit_load": true,
+    "reject_changed_volume_allocation": true,
+    "board_data_sha256": "52f1094dd3279bab95bf3845be273854fa4f2daa8595ca0b26e1be0e19fa6948"
+  },
+  "new_kernel_dts_compiled": false,
+  "new_firmware_booted": false
+}

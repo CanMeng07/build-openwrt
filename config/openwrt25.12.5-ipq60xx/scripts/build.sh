@@ -2,12 +2,14 @@
 set -Eeuo pipefail
 export TZ=UTC
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-mkdir -p "$ROOT/logs" "$ROOT/work"
+mkdir -p "$ROOT/logs" "$ROOT/work" "$ROOT/output"
 exec > >(tee -a "$ROOT/logs/build.log") 2>&1
 trap 'rc=$?; printf "Exit status: %s; time: %s\n" "$rc" "$(date -u +%FT%TZ)"; exit "$rc"' EXIT
 printf 'Collection scope: local/cloud compilation only; time: %s\n' "$(date -u +%FT%TZ)"
 test "$(uname -s)" = Linux || { echo 'A Linux build host is required.'; exit 1; }
 test ! -e "$ROOT/work/openwrt" || { echo 'Use a fresh work directory; existing source will not be overwritten.'; exit 1; }
+python3 "$ROOT/scripts/prepare-board-data.py"
+unset ZN_M2_BOARD_DATA_GZ_B64
 clone_pinned() {
   local url=$1 tag=$2 commit=$3 dest=$4
   git -c core.autocrlf=false clone --depth 1 --branch "$tag" "$url" "$dest"
@@ -24,16 +26,24 @@ cp -a "$ROOT/work/OpenClash/luci-app-openclash" package/
 mkdir -p package/UA3F
 cp -a "$ROOT/work/UA3F/." package/UA3F/
 cp -a "$ROOT/packages/mihomo-builtin" package/
+cp -a "$ROOT/packages/ipq-wifi-zn-m2" package/
+cp "$ROOT/board/ipq6018-zn-m2.dts" target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/
+cat "$ROOT/board/device.mk" >> target/linux/qualcommax/image/ipq60xx.mk
+mkdir -p files/etc/board.d files/etc/hotplug.d/firmware
+cp "$ROOT/board/10-zn-m2-network" files/etc/board.d/
+cp "$ROOT/board/11-zn-m2-caldata" files/etc/hotplug.d/firmware/
+chmod 0755 files/etc/board.d/10-zn-m2-network files/etc/hotplug.d/firmware/11-zn-m2-caldata
 cp "$ROOT/config.seed" .config
 make defconfig
-for package in luci-app-openclash ua3f mihomo-builtin; do
+grep -Fxq 'CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_zn_m2=y' .config
+for package in luci-app-openclash ua3f mihomo-builtin ipq-wifi-zn-m2; do
   grep -Fxq "CONFIG_PACKAGE_${package}=y" .config || { echo "Missing configured package: $package"; exit 1; }
 done
 make download -j8
 JOBS=$(nproc)
 make tools/install -j"$JOBS" V=s
 make toolchain/install -j"$JOBS" V=s
-make target/linux/compile -j"$JOBS" V=s
-make package/compile -j"$JOBS" V=s
+make -j"$JOBS" V=s
+python3 "$ROOT/scripts/make-factory.py" "$PWD" "$ROOT/output"
 find bin -type f \( -name '*.apk' -o -name '*.ipk' \) -print0 | sort -z | xargs -0 -r sha256sum > "$ROOT/logs/packages.sha256"
-echo 'Platform and package compilation completed. No board firmware or flashable recovery image has been generated.'
+echo 'Complete zn,m2 firmware image generated; static layout gates passed. Runtime boot and recovery remain unverified.'
