@@ -49,6 +49,7 @@ grep -Fxq 'CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_zn_m2=y' .config
 for package in luci-app-openclash ua3f mihomo-builtin ipq-wifi-zn-m2; do
   grep -Fxq "CONFIG_PACKAGE_${package}=y" .config || { echo "Missing configured package: $package"; exit 1; }
 done
+cp .config "$ROOT/output/build.config"
 fi
 if [ "$MODE" = --prepare ]; then
   echo 'Source, feeds dependencies and Ruby configure checks passed.'
