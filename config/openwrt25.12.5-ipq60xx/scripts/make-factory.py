@@ -2,6 +2,7 @@ import hashlib
 import json
 import os
 import shutil
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -26,6 +27,9 @@ require(not work.exists(), 'Existing factory workspace will not be overwritten')
 work.mkdir()
 base, overlay = work / 'base', work / 'overlay'
 subprocess.run(['unsquashfs', '-d', str(base), str(full_rootfs)], check=True)
+console = (base / 'dev/console').stat()
+require(stat.S_ISCHR(console.st_mode) and os.major(console.st_rdev) == 5
+        and os.minor(console.st_rdev) == 1, 'Missing or invalid /dev/console character device')
 (overlay / 'upper').mkdir(parents=True)
 (overlay / 'work').mkdir()
 

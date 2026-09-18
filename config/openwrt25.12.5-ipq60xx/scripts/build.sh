@@ -45,6 +45,7 @@ JOBS=$(nproc)
 make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" tools/install -j"$JOBS" V=s
 make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" toolchain/install -j"$JOBS" V=s
 make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" -j"$JOBS" V=s
-python3 "$ROOT/scripts/make-factory.py" "$PWD" "$ROOT/output"
+test -x "$PWD/staging_dir/host/bin/fakeroot"
+"$PWD/staging_dir/host/bin/fakeroot" -- python3 "$ROOT/scripts/make-factory.py" "$PWD" "$ROOT/output"
 find bin -type f \( -name '*.apk' -o -name '*.ipk' \) -print0 | sort -z | xargs -0 -r sha256sum > "$ROOT/logs/packages.sha256"
 echo 'Complete zn,m2 firmware image generated; static layout gates passed. Runtime boot and recovery remain unverified.'
