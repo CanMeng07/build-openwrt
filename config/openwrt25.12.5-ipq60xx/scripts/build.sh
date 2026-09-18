@@ -8,6 +8,9 @@ exec > >(tee -a "$ROOT/logs/build.log") 2>&1
 trap 'rc=$?; printf "Exit status: %s; time: %s\n" "$rc" "$(date -u +%FT%TZ)"; exit "$rc"' EXIT
 printf 'Collection scope: local/cloud compilation only; time: %s\n' "$(date -u +%FT%TZ)"
 test "$(uname -s)" = Linux || { echo 'A Linux build host is required.'; exit 1; }
+MODE=${1:-all}
+case "$MODE" in all|--prepare|--compile) ;; *) echo 'Unknown build mode'; exit 1 ;; esac
+if [ "$MODE" != --compile ]; then
 test ! -e "$ROOT/work/openwrt" || { echo 'Use a fresh work directory; existing source will not be overwritten.'; exit 1; }
 python3 "$ROOT/scripts/prepare-board-data.py"
 unset ZN_M2_BOARD_DATA_GZ_B64
@@ -22,7 +25,9 @@ clone_pinned https://github.com/vernesong/OpenClash.git v0.47.116 23896d2662a7d4
 clone_pinned https://github.com/SunBK201/UA3F.git v3.6.0 ac39645779823e94628435a2d69cd086a4e4b9fc "$ROOT/work/UA3F"
 cd "$ROOT/work/openwrt"
 ./scripts/feeds update -a
+python3 "$ROOT/scripts/repair-build-inputs.py" "$PWD"
 ./scripts/feeds install -a
+python3 "$ROOT/scripts/verify-ruby-configure.py" "$PWD"
 cp -a "$ROOT/work/OpenClash/luci-app-openclash" package/
 mkdir -p package/UA3F
 cp -a "$ROOT/work/UA3F/." package/UA3F/
@@ -36,10 +41,21 @@ cp "$ROOT/board/11-zn-m2-caldata" files/etc/hotplug.d/firmware/
 chmod 0755 files/etc/board.d/10-zn-m2-network files/etc/hotplug.d/firmware/11-zn-m2-caldata
 cp "$ROOT/config.seed" .config
 make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" defconfig
+if grep -E 'WARNING: Makefile .* (dependency|build dependency) .*which does not exist' "$ROOT/logs/build.log"; then
+  echo 'Unresolved package dependency metadata; stopping before compilation.'
+  exit 1
+fi
 grep -Fxq 'CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_zn_m2=y' .config
 for package in luci-app-openclash ua3f mihomo-builtin ipq-wifi-zn-m2; do
   grep -Fxq "CONFIG_PACKAGE_${package}=y" .config || { echo "Missing configured package: $package"; exit 1; }
 done
+fi
+if [ "$MODE" = --prepare ]; then
+  echo 'Source, feeds dependencies and Ruby configure checks passed.'
+  exit 0
+fi
+cd "$ROOT/work/openwrt"
+test -f .config
 make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" download -j8
 JOBS=$(nproc)
 make DL_DIR="$ROOT/cache/downloads" CCACHE_DIR="$ROOT/cache/ccache" tools/install -j"$JOBS" V=s

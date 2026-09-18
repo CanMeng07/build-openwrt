@@ -18,6 +18,8 @@ scripts/build.sh执行完整构建，scripts/make-factory.py生成UBI，并由im
 
 ## 缓存与产物
 
+feeds更新后先按索引链接包定义，再扫描已安装包，保持核心包及feeds优先顺序；六个依赖来源必须存在。缺失依赖元数据会在编译前终止。Ruby的host和target配置由autoconf直接重新生成，避免aclocal误读参数化m4引用；使用固定哈希的Ruby源码及feeds补丁执行提前生成检查，失败会终止构建。
+
 缓存仅包含公开源码下载和编译器ccache，以源码版本、配置、板级文件、包定义及脚本哈希区分；不缓存设备数据、Secret、完整工作目录或固件。
 
 产物包括完整.ubi、SHA256、构建与容量检查JSON、软件包、最终.config和日志。Actions保留14天，不自动发布Release或刷写。最终验收见项目docs/firmware-acceptance.md。
